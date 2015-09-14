@@ -1,0 +1,22 @@
+{
+	"name": "vr-video",
+	"version": "1.0.0",
+	"description": "VR 360 video viewer, webGL using BabylonJS",
+	"main": "index.html",
+	"author": "ismael faro <soy@ismaelfaro.com>",
+	"license": "MIT",
+	"keywords": [
+		"vr",
+		"360",
+		"video",
+		"viewer",
+		"WebGL",
+		"polymer",
+		"web-components"
+	],
+  "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1"
+  },
+	"devDependencies": {
+	}
+}
