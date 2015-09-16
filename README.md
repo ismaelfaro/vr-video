@@ -1,7 +1,7 @@
 # VR-video
-Polymer Web Component to create virtual reality 360 video presentation.
+Polymer Web Component to create virtual reality 360 video viewer.
 
-It use babylonjs engine. Check more information about  [Babylon.css] (http://daneden.me/animate)
+It use babylonjs engine. Check more information about  [Babylonjs] (http://www.babylonjs.com/)
 
 Documentation and Demo [http://ismaelfaro.github.io/vr-video](http://ismaelfaro.github.io/vr-video)
 
