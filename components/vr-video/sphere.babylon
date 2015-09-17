@@ -1,5 +1,5 @@
 {"autoClear":true,"clearColor":[0,0,0],"ambientColor":[0,0,0],"gravity":[0,-9.81,0],
-"materials":[{"name":"sphere.Material","id":"sphere.Material","ambient":[0.8,0.8,0.8],"diffuse":[0.64,0.64,0.64],"specular":[0.5,0.5,0.5],"emissive":[0,0,0],"specularPower":50,"alpha":1,"backFaceCulling":true, "diffuseTexture":{"name":"video.mp4","level":1,"hasAlpha":1,"coordinatesMode":1,"uOffset":0,"vOffset":0,"uScale":1,"vScale":1,"uAng":0,"vAng":0,"wAng":0,"wrapU":1,"wrapV":1,"coordinatesIndex":0}}],
+"materials":[{"name":"sphere.Material","id":"sphere.Material","ambient":[0.8,0.8,0.8],"diffuse":[0.64,0.64,0.64],"specular":[0.5,0.5,0.5],"emissive":[0,0,0],"specularPower":50,"alpha":1,"backFaceCulling":true}],
 "multiMaterials":[],
 "skeletons":[],
 "meshes":[{"name":"Sphere","id":"Sphere","materialId":"sphere.Material","billboardMode":0,"position":[0,0,0],"rotation":[0,0,0],"scaling":[178.7278,178.7278,178.7278],"isVisible":true,"isEnabled":true,"useFlatShading":false,"checkCollisions":false,"receiveShadows":false
