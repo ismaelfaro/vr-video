@@ -90,7 +90,8 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
                 this._cameraObject = new BABYLON.VirtualJoysticksCamera('camera', BABYLON.Vector3.Zero(), this._sceneObject);
                 break;
             default:
-                this._cameraObject = new BABYLON.ArcRotateCamera('camera', 0, 0, 100, BABYLON.Vector3.Zero(), this._sceneObject);
+                this._cameraObject = new BABYLON.ArcRotateCamera('camera', 4.5, 2, 1, BABYLON.Vector3.Zero(), this._sceneObject);
+                this._cameraObject.setPosition(new BABYLON.Vector3(0, 120, 120));
             }
 
 
