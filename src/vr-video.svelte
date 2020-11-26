@@ -4,8 +4,8 @@
 
     // import { BABYLON } from 'babylonjs'
     
-	export let video;
-	export let camera;
+	export let video = "http://ismaelfaro.github.io/vr-video/components/vr-video/demo/video360avion480p.mp4";
+	export let camera = "default";
 
 	let _cameraObject = null;
     let _sceneObject =  null;
@@ -48,13 +48,26 @@
         
         _cameraObject.attachControl(canvasElement, false);
 
-        _sceneLoader = BABYLON.SceneLoader.ImportMesh('', '', 'build/sphere.babylon',_sceneObject, function (newMeshes) {
-            _sceneLoader = newMeshes[0];
-            _sceneLoader.material = null;
-            _sceneLoader.material = new BABYLON.StandardMaterial('texture1', _sceneObject);
-            _sceneLoader.material.backFaceCulling = false;
-            _sceneLoader.material.emissiveTexture = new BABYLON.VideoTexture('video', [video], 1024, _sceneObject, true);
-        });
+        var redMat = new BABYLON.StandardMaterial("redMat", _sceneObject);
+        redMat.backFaceCulling = false;
+        redMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    
+        var redSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:200}, _sceneObject);
+        redSphere.material = redMat;
+        redSphere.material.diffuseTexture = new BABYLON.VideoTexture('video', video, _sceneObject, true);
+        // redSphere.position = lightRed.position;
+    
+        // _sceneLoader = BABYLON.SceneLoader.ImportMesh('', '', 'build/sphere.gltf',_sceneObject, function (newMeshes) {
+        //     console.log(newMeshes)
+        //     _sceneLoader = newMeshes[0];
+        //     _sceneLoader.material = null;
+        //     _sceneLoader.material = new BABYLON.StandardMaterial('texture1', _sceneObject);
+        //     _sceneLoader.material.backFaceCulling = false;
+        //     _sceneLoader.material.emissiveColor = new BABYLON.Color3(10, 1, 0);
+        //     _sceneLoader.material.ambientColor = new BABYLON.Color3(2, 0.98, 0.53);
+
+        //     // _sceneLoader.material.emissiveTexture = new BABYLON.VideoTexture('video', [video], 1024, _sceneObject, true);
+        // });
     };
 
 
