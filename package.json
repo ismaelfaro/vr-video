@@ -1,22 +1,36 @@
 {
-	"name": "vr-video",
-	"version": "1.0.0",
-	"description": "VR 360 video viewer, webGL using BabylonJS",
-	"main": "index.html",
-	"author": "ismael faro <soy@ismaelfaro.com>",
-	"license": "MIT",
-	"keywords": [
-		"vr",
-		"360",
-		"video",
-		"viewer",
-		"WebGL",
-		"polymer",
-		"web-components"
-	],
+  "name": "vr-video",
+  "version": "2.0.0",
+  "description": "VR 360 video viewer, webGL using BabylonJS",
+  "main": "index.html",
+  "author": "ismael faro <soy@ismaelfaro.com>",
+  "license": "MIT",
+  "keywords": [
+    "vr",
+    "360",
+    "video",
+    "viewer",
+    "WebGL",
+    "polymer",
+    "web-components"
+  ],
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public"
   },
-	"devDependencies": {
-	}
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.0.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.30.0"
+  },
+  "dependencies": {
+    "babylonjs": "^4.2.0",
+    "sirv-cli": "^1.0.0"
+  }
 }
