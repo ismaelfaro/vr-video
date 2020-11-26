@@ -1,96 +1,103 @@
 <svelte:options tag="vr-video" immutable={true} />
 
 <script>
+/*
+The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 
-    // import { BABYLON } from 'babylonjs'
+    common use:
+
+      <vr-video video="[Video URL]" ></vr-video>
+
+    change camera setting:
+
+      cardboard:
+        <vr-video camera="cardboard" video="[Video URL]" ></vr-video>
+
+      vr:
+        <vr-video camera="vr" video="[Video URL]" ></vr-video>
+
+      Oculus:
+        <vr-video camera="oculus" video="[Video URL]" ></vr-video>
+
+*/
     
-	export let video = "http://ismaelfaro.github.io/vr-video/components/vr-video/demo/video360avion480p.mp4";
-	export let camera = "default";
+	export let video = "video360avion480p.mp4";
+	export let cameraType = "default";
 
-	let _cameraObject = null;
-    let _sceneObject =  null;
-    let _sceneLoader =  null;
+	let camera = null;
+    let scene =  null;
     let canvasElement = null;
-    let _engine = null;
-// 	let	_lights = {};
-        
+    let engine = null;
+    let videoPlay = -1;
+
     
-    function mount(){
+    function init(){
         console.log('demo')
-        _engine = new BABYLON.Engine(canvasElement, true);
-        _engine.setSize(window.innerWidth, window.innerHeight);
+        engine = new BABYLON.Engine(canvasElement, true);
+        engine.setSize(window.innerWidth, window.innerHeight);
+
         createScene();
-        _engine.runRenderLoop(function () {
-                        _sceneObject.render();});
+
+        engine.runRenderLoop(function () {
+                        scene.render();});
+
+        window.addEventListener('resize', function () {
+                                    engine.resize(); });
 
     };
 
 	function createScene(){
            
-        _sceneObject = new BABYLON.Scene(_engine);
+        scene = new BABYLON.Scene(engine);
 
-        _sceneObject.clearColor = new BABYLON.Color3(0, 0, 0);
+        scene.clearColor = new BABYLON.Color3(0, 0, 0);
 
-        switch (camera) {
+        switch (cameraType) {
             case 'oculus':
-                _cameraObject = new BABYLON.OculusCamera('camera', new BABYLON.Vector3(0, 0, 0), _sceneObject);
+                camera = new BABYLON.OculusCamera('camera', new BABYLON.Vector3(0, 0, 0), scene);
                 break;
             case 'cardboard':
-                _cameraObject = new BABYLON.VRDeviceOrientationCamera('camera', new BABYLON.Vector3(0, 1, -15), _sceneObject);
-                _cameraObject.rotation.x = 90;
+                camera = new BABYLON.VRDeviceOrientationCamera('camera', new BABYLON.Vector3(0, 1, -15), scene);
+                camera.rotation.x = 90;
                 break;
             case 'vr':
-                _cameraObject = new BABYLON.VirtualJoysticksCamera('camera', BABYLON.Vector3.Zero(), _sceneObject);
+                camera = new BABYLON.VirtualJoysticksCamera('camera', BABYLON.Vector3.Zero(), scene);
                 break;
             default:
-                _cameraObject = new BABYLON.ArcRotateCamera('camera', 0, 0, 100, BABYLON.Vector3.Zero(), _sceneObject);
+                camera = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vector3(0, 0, 0), scene);    
             };
         
-        _cameraObject.attachControl(canvasElement, false);
+        camera.attachControl(canvasElement, false);
 
-        var redMat = new BABYLON.StandardMaterial("redMat", _sceneObject);
-        redMat.backFaceCulling = false;
-        redMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
-    
-        var redSphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:200}, _sceneObject);
-        redSphere.material = redMat;
-        redSphere.material.diffuseTexture = new BABYLON.VideoTexture('video', video, _sceneObject, true);
-        // redSphere.position = lightRed.position;
-    
-        // _sceneLoader = BABYLON.SceneLoader.ImportMesh('', '', 'build/sphere.gltf',_sceneObject, function (newMeshes) {
-        //     console.log(newMeshes)
-        //     _sceneLoader = newMeshes[0];
-        //     _sceneLoader.material = null;
-        //     _sceneLoader.material = new BABYLON.StandardMaterial('texture1', _sceneObject);
-        //     _sceneLoader.material.backFaceCulling = false;
-        //     _sceneLoader.material.emissiveColor = new BABYLON.Color3(10, 1, 0);
-        //     _sceneLoader.material.ambientColor = new BABYLON.Color3(2, 0.98, 0.53);
+        var sphereMaterial = new BABYLON.StandardMaterial("sphere", scene);
+        sphereMaterial.backFaceCulling = false;
+        sphereMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        sphereMaterial.diffuseTexture = new BABYLON.VideoTexture('video', video, scene, true, true);
 
-        //     // _sceneLoader.material.emissiveTexture = new BABYLON.VideoTexture('video', [video], 1024, _sceneObject, true);
-        // });
+        // set a event to detect a click in the scene and play the video
+        scene.onPointerDown = function () { 
+            videoPlay = videoPlay*-1;
+            if (videoPlay==1){
+                sphereMaterial.diffuseTexture.video.play(); 
+            }else{
+                sphereMaterial.diffuseTexture.video.pause(); 
+            }
+             
+        }
+
+        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:200}, scene);
+        sphere.material = sphereMaterial;    
+
     };
 
 
-
-window.addEventListener('resize', function () {
-                                    _engine.resize(); });
-
-function init(){
-    console.log('init')
-}
-
 </script>
 
-
 <svelte:head>
-	<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={mount}></script>
+	<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={init}></script>
 </svelte:head>
 
-
-
 <main>
- <!--  -->
- the canvas is there
  <canvas id="renderCanvas" bind:this={canvasElement}></canvas>
 </main>
 
