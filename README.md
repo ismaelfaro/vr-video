@@ -1,5 +1,5 @@
 # VR-video
-Polymer Web Component to create virtual reality 360 video viewer.
+360 video viewer in Svelte Component and Web Component with Mobile and VR support.
 
 It use babylonjs engine. Check more information about  [Babylonjs] (https://www.babylonjs.com/)
 
@@ -28,5 +28,4 @@ change camera setting:
 ## User interaction
 the user can mmove the camera using the mouse or drag in touch screens. If you use the CardBoard or Oculus camera you can use the device orientation to move arounf the 360 video.
 
-## TODO: 
- Replace Babylon 2.0 to 2.1
+Clicking in the screen you can play or pause the video.
