@@ -86,15 +86,27 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
         }
 
         var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:200}, scene);
-        sphere.material = sphereMaterial;    
+        sphere.material = sphereMaterial;   
+        
+       
 
     };
 
+    function init_text(){
+        // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        // var textblock = new BABYLON.GUI.TextBlock();
+        // textblock.text = "Press ctrl/cmd + c after moving the\n pointer to either sphere or box !";
+        // textblock.fontSize = 24;
+        // textblock.top = -100;
+        // textblock.color = "white";
+        // advancedTexture.addControl(textblock);
+    }
 
 </script>
 
 <svelte:head>
 	<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={init}></script>
+	<!-- <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js" on:load={init_text} ></script> -->
 </svelte:head>
 
 <main>
