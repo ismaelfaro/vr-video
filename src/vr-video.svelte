@@ -21,92 +21,106 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 
 */
     
-	export let video = "video360avion480p.mp4";
-	export let cameraType = "default";
+    import { onMount } from "svelte/internal";
+    import Viewer360 from "./components/Viewer360.js";
 
-	let camera = null;
-    let scene =  null;
+	export let video360 = "video360avion480p.mp4";
+    export let cameraType = "default";
     let canvasElement = null;
-    let engine = null;
-    let videoPlay = -1;
 
-    
-    function init(){
-        console.log('demo')
-        engine = new BABYLON.Engine(canvasElement, true);
-        engine.setSize(window.innerWidth, window.innerHeight);
+    onMount(async () => {
+        console.log('------',video360 )
+        let viewer = new Viewer360(canvasElement,video360,cameraType);
+        viewer.createScene();
+        viewer.init_text()
+        
+	});
 
-        createScene();
+	// let camera = null;
+    // let scene =  null;
+    // let canvasElement = null;
+    // let engine = null;
+    // let videoPlay = -1;
 
-        engine.runRenderLoop(function () {
-                        scene.render();});
+    // function init(){
+    //     console.log('demo')
+    //     engine = new BABYLON.Engine(canvasElement, true);
+    //     engine.setSize(window.innerWidth, window.innerHeight);
 
-        window.addEventListener('resize', function () {
-                                    engine.resize(); });
+    //     createScene();
 
-    };
+    //     engine.runRenderLoop(function () {
+    //                     scene.render();});
 
-	function createScene(){
+    //     window.addEventListener('resize', function () {
+    //                                 engine.resize(); });
+
+    // };
+
+	// function createScene(){
            
-        scene = new BABYLON.Scene(engine);
+    //     scene = new BABYLON.Scene(engine);
 
-        scene.clearColor = new BABYLON.Color3(0, 0, 0);
+    //     scene.clearColor = new BABYLON.Color3(0, 0, 0);
 
-        switch (cameraType) {
-            case 'oculus':
-                camera = new BABYLON.OculusCamera('camera', new BABYLON.Vector3(0, 0, 0), scene);
-                break;
-            case 'cardboard':
-                camera = new BABYLON.VRDeviceOrientationCamera('camera', new BABYLON.Vector3(0, 1, -15), scene);
-                camera.rotation.x = 90;
-                break;
-            case 'vr':
-                camera = new BABYLON.VirtualJoysticksCamera('camera', BABYLON.Vector3.Zero(), scene);
-                break;
-            default:
-                camera = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vector3(0, 0, 0), scene);    
-            };
+    //     switch (cameraType) {
+    //         case 'oculus':
+    //             camera = new BABYLON.OculusCamera('camera', new BABYLON.Vector3(0, 0, 0), scene);
+    //             break;
+    //         case 'cardboard':
+    //             camera = new BABYLON.VRDeviceOrientationCamera('camera', new BABYLON.Vector3(0, 1, -15), scene);
+    //             camera.rotation.x = 90;
+    //             break;
+    //         case 'vr':
+    //             camera = new BABYLON.VirtualJoysticksCamera('camera', BABYLON.Vector3.Zero(), scene);
+    //             break;
+    //         default:
+    //             camera = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vector3(0, 0, 0), scene);    
+    //         };
         
-        camera.attachControl(canvasElement, false);
+    //     camera.attachControl(canvasElement, false);
 
-        var sphereMaterial = new BABYLON.StandardMaterial("sphere", scene);
-        sphereMaterial.backFaceCulling = false;
-        sphereMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
-        sphereMaterial.diffuseTexture = new BABYLON.VideoTexture('video', video, scene, true, true);
+    //     var sphereMaterial = new BABYLON.StandardMaterial("sphere", scene);
+    //     sphereMaterial.backFaceCulling = false;
+    //     sphereMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    //     sphereMaterial.diffuseTexture = new BABYLON.VideoTexture('video', video, scene, true, true);
 
-        // set a event to detect a click in the scene and play the video
-        scene.onPointerDown = function () { 
-            videoPlay = videoPlay*-1;
-            if (videoPlay==1){
-                sphereMaterial.diffuseTexture.video.play(); 
-            }else{
-                sphereMaterial.diffuseTexture.video.pause(); 
-            }
+    //     // set a event to detect a click in the scene and play the video
+    //     scene.onPointerDown = function () { 
+    //         videoPlay = videoPlay*-1;
+    //         if (videoPlay==1){
+    //             sphereMaterial.diffuseTexture.video.play(); 
+    //         }else{
+    //             sphereMaterial.diffuseTexture.video.pause(); 
+    //         }
              
-        }
+    //     }
 
-        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:200}, scene);
-        sphere.material = sphereMaterial;   
+    //     var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:200}, scene);
+    //     sphere.material = sphereMaterial;   
         
-       
+    //    init_text();
 
-    };
+    // };
 
-    function init_text(){
-        // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-        // var textblock = new BABYLON.GUI.TextBlock();
-        // textblock.text = "Press ctrl/cmd + c after moving the\n pointer to either sphere or box !";
-        // textblock.fontSize = 24;
-        // textblock.top = -100;
-        // textblock.color = "white";
-        // advancedTexture.addControl(textblock);
-    }
+    // function init_text(){
+    //     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    //     var textblock = new BABYLON.GUI.TextBlock();
+    //     textblock.text = "Press ctrl/cmd + c after moving the\n pointer to either sphere or box !";
+    //     textblock.fontSize = 24;
+    //     textblock.top = -100;
+    //     textblock.color = "white";
+    //     advancedTexture.addControl(textblock);
+    // }
 
 </script>
 
 <svelte:head>
-	<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={init}></script>
-	<!-- <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js" on:load={init_text} ></script> -->
+	<!-- <script src="https://preview.babylonjs.com/babylon.js" on:load={init}></script> -->
+	<!-- <script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={init}></script> -->
+    <!-- <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js" on:load={init_text} ></script> -->
+    
+
 </svelte:head>
 
 <main>
