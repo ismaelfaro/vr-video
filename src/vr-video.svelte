@@ -30,7 +30,6 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
     let engine = null;
     let videoPlay = -1;
 
-    
     function init(){
         console.log('demo')
         engine = new BABYLON.Engine(canvasElement, true);
@@ -43,7 +42,7 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 
         window.addEventListener('resize', function () {
                                     engine.resize(); });
-
+        init_text();
     };
 
 	function createScene(){
@@ -76,23 +75,23 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 
         // set a event to detect a click in the scene and play the video
         scene.onPointerDown = function () { 
-            videoPlay = videoPlay*-1;
-            if (videoPlay==1){
-                sphereMaterial.diffuseTexture.video.play(); 
-            }else{
-                sphereMaterial.diffuseTexture.video.pause(); 
-            }
-             
+            sphereMaterial.diffuseTexture.video.play(); 
         }
 
+        window.addEventListener("dblclick", function (e) {	    
+	        sphereMaterial.diffuseTexture.video.pause(); 
+	    });
+     
         var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:200}, scene);
         sphere.material = sphereMaterial;   
-        
-       
-
     };
 
     function init_text(){
+        var canvas =canvasElement;
+        var ctx = canvas.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World", 10, 50); 
+    }
         // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
         // var textblock = new BABYLON.GUI.TextBlock();
         // textblock.text = "Press ctrl/cmd + c after moving the\n pointer to either sphere or box !";
@@ -100,12 +99,13 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
         // textblock.top = -100;
         // textblock.color = "white";
         // advancedTexture.addControl(textblock);
-    }
+    
 
 </script>
 
 <svelte:head>
-	<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={init}></script>
+	<!-- <script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={init}></script> -->
+	<script src="https://cdn.babylonjs.com/babylon.js" on:load={init}></script>
 	<!-- <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js" on:load={init_text} ></script> -->
 </svelte:head>
 
