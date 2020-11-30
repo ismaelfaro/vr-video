@@ -21,7 +21,7 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 
 */
     
-	export let video = "video360avion480p.mp4";
+	export let video = '';
 	export let camera = "default";
 
 	let camera3d = null;
@@ -31,7 +31,6 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
     let videoPlay = -1;
 
     function init(){
-        console.log('demo')
         engine = new BABYLON.Engine(canvasElement, true);
         engine.setSize(window.innerWidth, window.innerHeight);
 
@@ -42,7 +41,6 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 
         window.addEventListener('resize', function () {
                                     engine.resize(); });
-        init_text();
     };
 
 	function createScene(){
@@ -86,27 +84,12 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
         sphere.material = sphereMaterial;   
     };
 
-    function init_text(){
-        // var canvas =canvasElement;
-        // var ctx = canvas.getContext("2d");
-        // ctx.font = "30px Arial";
-        // ctx.fillText("Hello World", 10, 50); 
-    }
-        // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-        // var textblock = new BABYLON.GUI.TextBlock();
-        // textblock.text = "Press ctrl/cmd + c after moving the\n pointer to either sphere or box !";
-        // textblock.fontSize = 24;
-        // textblock.top = -100;
-        // textblock.color = "white";
-        // advancedTexture.addControl(textblock);
-    
+
 
 </script>
 
 <svelte:head>
-	<!-- <script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js" on:load={init}></script> -->
 	<script src="https://cdn.babylonjs.com/babylon.js" on:load={init}></script>
-	<!-- <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js" on:load={init_text} ></script> -->
 </svelte:head>
 
 <main>
@@ -117,6 +100,6 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 	  #renderCanvas {
             width: 100%;
             height: 100%;
-            touch-action: none;
+            /* touch-action: none; */
         }
 </style>
