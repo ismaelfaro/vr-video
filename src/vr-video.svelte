@@ -22,9 +22,9 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 */
     
 	export let video = "video360avion480p.mp4";
-	export let cameraType = "default";
+	export let camera = "default";
 
-	let camera = null;
+	let camera3d = null;
     let scene =  null;
     let canvasElement = null;
     let engine = null;
@@ -51,22 +51,22 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
 
         scene.clearColor = new BABYLON.Color3(0, 0, 0);
 
-        switch (cameraType) {
+        switch (camera) {
             case 'oculus':
-                camera = new BABYLON.OculusCamera('camera', new BABYLON.Vector3(0, 0, 0), scene);
+                camera3d = new BABYLON.OculusCamera('camera3d', new BABYLON.Vector3(0, 0, 0), scene);
                 break;
             case 'cardboard':
-                camera = new BABYLON.VRDeviceOrientationCamera('camera', new BABYLON.Vector3(0, 1, -15), scene);
-                camera.rotation.x = 90;
+                camera3d = new BABYLON.VRDeviceOrientationCamera('camera3d', new BABYLON.Vector3(0, 1, -15), scene);
+                camera3d.rotation.x = 90;
                 break;
             case 'vr':
-                camera = new BABYLON.VirtualJoysticksCamera('camera', BABYLON.Vector3.Zero(), scene);
+                camera3d = new BABYLON.VirtualJoysticksCamera('camera3d', BABYLON.Vector3.Zero(), scene);
                 break;
             default:
-                camera = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vector3(0, 0, 0), scene);    
+                camera3d = new BABYLON.DeviceOrientationCamera("DevOr_camera", new BABYLON.Vector3(0, 0, 0), scene);    
             };
         
-        camera.attachControl(canvasElement, false);
+        camera3d.attachControl(canvasElement, false);
 
         var sphereMaterial = new BABYLON.StandardMaterial("sphere", scene);
         sphereMaterial.backFaceCulling = false;
@@ -87,10 +87,10 @@ The `VR-video` virtual reality 360 video viewer. It use a BabylonJS library
     };
 
     function init_text(){
-        var canvas =canvasElement;
-        var ctx = canvas.getContext("2d");
-        ctx.font = "30px Arial";
-        ctx.fillText("Hello World", 10, 50); 
+        // var canvas =canvasElement;
+        // var ctx = canvas.getContext("2d");
+        // ctx.font = "30px Arial";
+        // ctx.fillText("Hello World", 10, 50); 
     }
         // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
         // var textblock = new BABYLON.GUI.TextBlock();
